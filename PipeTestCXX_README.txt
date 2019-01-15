@@ -1,9 +1,3 @@
-#  PipeTestCXX.exe pipetest.bit check
-#  PipeTestCXX.exe pipetest.bit bench
-#  PipeTestCXX.exe pipetest.bit stress
-
-
-
 
 
 PipeTest Sample
