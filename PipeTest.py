@@ -43,12 +43,10 @@ class PipeTest:
         self.xem.LoadDefaultPLLConfiguration()
 
         # Download the configuration file.
-        if self.devInfo.productName == 'XEM6002-LX9':
-            config_file_name = 'pipetest-xem6002.bit'
-        elif self.devInfo.productName == 'XEM6001':
+        if self.devInfo.productName == 'XEM6001':
             config_file_name = 'pipetest-xem6001.bit'
-        elif self.devInfo.productName == 'XEM7010':
-            config_file_name = 'Counters_XEM7001.bit'
+        elif self.devInfo.productName == 'XEM7010-A50':
+            config_file_name = 'pipetest-xem7010.bit'
         else: config_file_name = 'pipetest.bit'
         
         if (self.xem.NoError != self.xem.ConfigureFPGA(config_file_name)):
