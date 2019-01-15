@@ -1,7 +1,14 @@
 import timeit
 import struct
-import ok
 import pdb
+import sys
+
+#import ok
+# import the opal kelly API for the appropriate python version
+if sys.version_info[0] == 2:
+    import OpalKellyAPIPython2_7.ok as ok  #import the Opal Kelly API
+elif sys.version_info[0] == 3:
+    import OpalKellyAPIPython3_6.ok as ok  #import the Opal Kelly API
 
 class PipeTest:
     def __init__(self):
@@ -32,13 +39,18 @@ class PipeTest:
         print("   Serial Number: {}".format(self.devInfo.serialNumber))
         print("       Device ID: {}".format(self.devInfo.deviceID.split('\0')[0]))
 
+        # https://library.opalkelly.com/library/FrontPanelAPI/classokCFrontPanel.html#a206a26859fd2db3646dc748c815beeac
         self.xem.LoadDefaultPLLConfiguration()
 
         # Download the configuration file.
         if self.devInfo.productName == 'XEM6002-LX9':
             config_file_name = 'pipetest-xem6002.bit'
-        else:
+        elif self.devInfo.productName == 'XEM6001':
+            config_file_name = 'pipetest-xem6001.bit'
+        elif self.devInfo.productName == 'XEM7010':
             config_file_name = 'Counters_XEM7001.bit'
+        else: config_file_name = 'pipetest.bit'
+        
         if (self.xem.NoError != self.xem.ConfigureFPGA(config_file_name)):
             print("FPGA configuration failed.")
             return(False)
@@ -229,7 +241,6 @@ class PipeTest:
         
 # Main code - currently benchtest only
 if __name__ == '__main__':
-    import sys
     print("------ Pipe Tester in Python ------")
     pt = PipeTest()
     if (False == pt.InitializeDevice()):
